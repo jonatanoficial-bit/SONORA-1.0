@@ -2,7 +2,7 @@
 
 **Build:** 2026-02-09
 
-This is a **mobile-first**, **vanilla HTML/CSS/JS** platform for acoustic analysis and audio planning with:
+This is a **mobile-first**, **vanilla HTML/CSS/JS** project scaffold with:
 - Premium AAA-style UI (glass/gradient, micro-interactions, smooth animations)
 - A simple SPA router (no frameworks)
 - **Modular content/DLC system** loaded dynamically via JSON manifests
@@ -99,3 +99,11 @@ Admin features (static-friendly):
 ```
 
 Enjoy.
+
+## Medição via microfone (Fase 2)
+
+- Use HTTPS (GitHub Pages ok)
+- Permita acesso ao microfone
+- Recomenda-se PC/notebook + interface de áudio
+- Resultados são **indicativos** e dependem de ruído e do microfone
+

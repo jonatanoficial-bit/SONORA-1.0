@@ -58,8 +58,8 @@ async function boot() {
 
   // Quick actions button
   document.getElementById("btnQuick").addEventListener("click", () => {
-    toast("Dica: Abra DLCs → Mini Game em /play (adicione seu conteúdo depois).");
-    ctx.router.go("/play");
+    toast("Abrindo Medição (RT) • use PC + microfone.");
+    ctx.router.go("/measure");
   });
 
   ctx.router.start("/home");
