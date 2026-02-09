@@ -7,7 +7,9 @@ import { renderHome } from "./screens/home.js";
 import { renderLibrary } from "./screens/library.js";
 import { renderDlc } from "./screens/dlc.js";
 import { renderSettings } from "./screens/settings.js";
+import { renderQuote } from "./screens/quote.js";
 import { renderAdmin } from "./screens/admin.js";
+import { renderPlan } from "./screens/plan.js";
 import { renderMiniGame } from "./screens/play.js";
 import { renderMeasure } from "./screens/measure.js";
 
@@ -32,6 +34,8 @@ const routes = {
   "/admin": () => renderAdmin(ctx),
   "/play": () => renderMiniGame(ctx),
   "/measure": () => renderMeasure(ctx),
+  "/plan": () => renderPlan(ctx),
+  "/quote": () => renderQuote(ctx),
 };
 
 function setActiveDock(path) {

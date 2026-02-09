@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "templates": [
+    {
+      "id": "church_speech_120",
+      "name": "Igreja • Sermão (até 120 pessoas)",
+      "use": "speech",
+      "people": 120,
+      "defaultMix": {
+        "vocals": 2,
+        "wireless": 1,
+        "playback": 1,
+        "pastor": 1
+      }
+    },
+    {
+      "id": "church_mixed_200",
+      "name": "Igreja • Misto (até 200 pessoas)",
+      "use": "mixed",
+      "people": 200,
+      "defaultMix": {
+        "vocals": 4,
+        "pastor": 1,
+        "keysStereo": 1,
+        "guitar": 1,
+        "bassDI": 1,
+        "drumsBasic": 1,
+        "playback": 1
+      }
+    },
+    {
+      "id": "church_band_300",
+      "name": "Igreja • Banda (até 300 pessoas)",
+      "use": "band",
+      "people": 300,
+      "defaultMix": {
+        "vocals": 6,
+        "pastor": 1,
+        "keysStereo": 1,
+        "guitar": 2,
+        "bassDI": 1,
+        "drumsFull": 1,
+        "playback": 1
+      }
+    }
+  ]
+}

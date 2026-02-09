@@ -282,3 +282,22 @@ textarea.input{min-height: 160px; resize: vertical; font-family: ui-monospace, S
 .toast.show{display:block; animation: toastIn .18s ease}
 @keyframes toastIn{from{transform: translateY(10px); opacity:.2} to{transform: translateY(0); opacity:1}}
 
+
+/* Print-friendly report */
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  .dock, .topbar { display: none !important; }
+  .btn { display: none !important; }
+  .card, .tile { box-shadow: none !important; border: 1px solid #ddd !important; background: #fff !important; }
+  canvas { border: 1px solid #ddd !important; }
+}
+
+@media print{
+  input, select, textarea{
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #000 !important;
+    padding: 0 !important;
+  }
+}

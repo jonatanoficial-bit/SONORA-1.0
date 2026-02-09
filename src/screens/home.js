@@ -20,5 +20,13 @@ export function renderHome(ctx) {
       el("button", { class: "btn secondary", "data-route": "/dlc" }, "Ver DLCs")
     )
   );
+  root.appendChild(el("div",{class:'card'},
+      el("div",{class:'h2'},"Atalhos"),
+      el("div",{class:'row'},
+        el("button",{class:'btn secondary',"data-route":"/plan"},"Abrir Planejamento"),
+        el("button",{class:'btn',"data-route":"/quote"},"Ir para Proposta")
+      )
+    ));
+
   return root;
 }

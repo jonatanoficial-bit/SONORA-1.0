@@ -2,7 +2,19 @@
 import { el } from "../ui/dom.js";
 import { toast } from "../ui/toast.js";
 import { runMeasurement, estimateRT } from "../audio/measureAudio.js";
+import { runRTASnapshot, suggestEQ } from "../audio/rta.js";
+import { recommendPA } from "../planner.js";
 import { genId, loadProjects, upsertProject, getProject } from "../projects.js";
+
+async function loadTemplates(){
+  try{
+    const res = await fetch("./content/core/templates.json");
+    if(!res.ok) return [];
+    const j = await res.json();
+    return j.templates || [];
+  }catch{ return []; }
+}
+
 
 function fmt(n,d=2){ return (Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toFixed(d); }
 function targetRtFor(use, vol){
@@ -94,17 +106,32 @@ export function renderMeasure(ctx){
     );
     const people=el("input",{class:"input",type:"number",min:"10",step:"1",placeholder:"Capacidade (pessoas)",value:existing?.people||"200"});
     const notes=el("input",{class:"input",placeholder:"Observações (opcional)",value:existing?.notes||""});
-    const saveBtn=el("button",{class:"btn",onclick:()=>{
+    const saveBtn=el("button",{class:"btn",onclick:async()=>{
       const a=parseFloat(area.value||"0"), h=parseFloat(height.value||"0");
       const vol=(a>0&&h>0)?a*h:0;
       const u=use.value, useLabel=u==="speech"?"Sermão":u==="band"?"Banda":"Misto";
+            const templateId = tplSelect.value || existing?.templateId || "";
+      const templates = await loadTemplates();
+      const chosen = templates.find(t=>t.id===templateId) || null;
+      const useFinal = chosen?.use || u;
+      const useLabelFinal = useFinal==="speech"?"Sermão":useFinal==="band"?"Banda":"Misto";
+      const peopleFinal = chosen?.people || (parseInt(people.value||"0",10)||null);
+
       const p={
         id:existing?.id||genId(),
         name:name.value.trim()||"Projeto",
         area:a, height:h, volume:vol,
-        use:u, useLabel,
-        people:parseInt(people.value||"0",10)||null,
+        use:useFinal, useLabel:useLabelFinal,
+        people:peopleFinal,
         notes:notes.value.trim(),
+        templateId,
+        mix: existing?.mix || (chosen?.defaultMix ? {
+          ...chosen.defaultMix,
+          wireless: chosen.defaultMix.wireless ?? 1,
+          monitors: (chosen.defaultMix.drumsFull || chosen.defaultMix.drumsBasic) ? 2 : 0,
+          diBoxes: (chosen.defaultMix.keysStereo || chosen.defaultMix.bassDI || chosen.defaultMix.playback) ? 2 : 0,
+          extra: chosen.defaultMix.extra ?? 2
+        } : (existing?.mix || null)),
         points: existing?.points || {front:null,mid:null,back:null},
         updatedAt:Date.now()
       };
@@ -129,6 +156,8 @@ export function renderMeasure(ctx){
         people,
         el("div",{style:"height:10px"}),
         notes,
+        el("div",{style:"height:10px"}),
+        tplWrap,
         el("div",{style:"height:12px"}),
         saveBtn,
         el("div",{style:"height:10px"}),
@@ -262,6 +291,110 @@ export function renderMeasure(ctx){
       el("div",{class:"h2"},"Decaimento (visual)"),
       canvas,
       el("div",{class:"sep"}),
+      
+      el("div",{class:"sep"}),
+      el("div",{class:"h2"},"Planejamento de PA (estimativa)"),
+      (()=>{
+        const pa = recommendPA({ people: p.people||200, area: p.area||120, height: p.height||4, use: p.use||"mixed" });
+        return el("div",{class:"tile"},
+          el("div",{class:"p"}, `Tier: ${pa.tier} • Alvo SPL: ~${pa.targets.spl} dBA`),
+          el("div",{class:"p"}, `Tops: ${pa.tops.perSide} por lado • ${pa.tops.type} • ~${pa.tops.rmsW}W RMS cada`),
+          el("div",{class:"p"}, pa.subs.count?`Subs: ${pa.subs.count}x ${pa.subs.type} • ~${pa.subs.rmsW}W RMS`:"Subs: não necessário (fala)"),
+          el("div",{class:"p"}, `Mesa: ${pa.mixer.min}–${pa.mixer.max} canais • ${pa.mixer.note}`),
+          el("div",{class:"tiny"}, pa.ampNote),
+          el("div",{class:"tiny",style:"margin-top:6px"}, pa.acoustic)
+        );
+      })(),
+      el("div",{class:"sep"}),
+      el("div",{class:"h2"},"RTA Snapshot (indicativo)"),
+      (()=>{
+        const state = { bands:null, eq:null };
+        const btn = el("button",{class:"btn small",onclick: async ()=>{
+          btn.disabled = true; btn.textContent = "Capturando…";
+          try{
+            const res = await runRTASnapshot({ seconds: 2.2, onProgress: (v)=>{ btn.textContent = `Capturando… ${Math.round(v*100)}%`; } });
+            state.bands = res.bands;
+            state.eq = suggestEQ(res.bands);
+            toast("RTA capturado");
+            renderRta();
+          }catch(e){
+            console.error(e);
+            toast("Erro no RTA. Permita microfone (HTTPS).");
+          }finally{
+            btn.disabled = false; btn.textContent = "Capturar RTA";
+          }
+        }},"Capturar RTA");
+
+        const chart = document.createElement("canvas");
+        chart.width = 900; chart.height = 280;
+        chart.style.width = "100%"; chart.style.height = "180px";
+        chart.style.borderRadius = "18px";
+        chart.style.border = "1px solid rgba(255,255,255,.12)";
+        chart.style.background = "rgba(0,0,0,.18)";
+
+        const eqBox = el("div",{class:"p"},"Capture o RTA para ver sugestões simples de EQ (cortes).");
+
+        function draw(){
+          const g = chart.getContext("2d");
+          const w=chart.width,h=chart.height;
+          g.clearRect(0,0,w,h);
+          g.strokeStyle="rgba(255,255,255,.15)"; g.lineWidth=2;
+          g.beginPath(); g.moveTo(54,18); g.lineTo(54,h-38); g.lineTo(w-18,h-38); g.stroke();
+          if(!state.bands) return;
+
+          const xs = state.bands.map(b=>b.hz);
+          const xMin=Math.log10(Math.min(...xs)), xMax=Math.log10(Math.max(...xs));
+          const yMin=-36, yMax=0;
+          const xFor=(hz)=>54 + (w-72) * ((Math.log10(hz)-xMin)/(xMax-xMin));
+          const yFor=(db)=>18 + (h-56) * ((yMax-db)/(yMax-yMin));
+
+          g.strokeStyle="rgba(6,182,212,.9)"; g.lineWidth=2.5;
+          g.beginPath();
+          state.bands.forEach((b,i)=>{
+            const x=xFor(b.hz), y=yFor(b.db);
+            if(i===0) g.moveTo(x,y); else g.lineTo(x,y);
+          });
+          g.stroke();
+
+          g.fillStyle="rgba(255,255,255,.75)";
+          g.font="700 18px ui-sans-serif, system-ui";
+          g.fillText("RTA (normalizado)", 54, h-10);
+        }
+
+        function renderRta(){
+          draw();
+          if(!state.eq || !state.eq.length){
+            eqBox.textContent = "Sem sugestões relevantes (ou sinal fraco).";
+            return;
+          }
+          const lines = state.eq.map(s=>`• CORTE ${Math.abs(s.db)} dB em ~${s.hz} Hz`);
+          eqBox.textContent = "Sugestões (indicativas):\n" + lines.join("\n");
+          eqBox.style.whiteSpace = "pre-line";
+        }
+        setTimeout(draw, 0);
+
+        return el("div",{class:"tile"},
+          el("div",{class:"p"},"Captura rápida do espectro do ambiente. Útil para apontar ressonâncias/realces. (Não é calibração.)"),
+          btn, chart, eqBox,
+          el("div",{class:"tiny",style:"margin-top:8px"},"Dica: gere ruído rosa no PA e capture no ponto do público.")
+        );
+      })(),
+      el("div",{class:"sep"}),
+      el("div",{class:"h2"},"Exportar / Imprimir"),
+      el("div",{class:"row"},
+        el("button",{class:"btn small",onclick:()=>window.print()},"Imprimir / Salvar PDF"),
+        el("button",{class:"btn small","data-route":"/quote"},"Gerar Proposta"),
+        el("button",{class:"btn small secondary",onclick:()=>{
+          const payload = JSON.stringify(p, null, 2);
+          const blob = new Blob([payload], { type:"application/json" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = (p.name||"sonora-projeto").replace(/[^a-z0-9\-_]+/gi,"_").toLowerCase() + ".json";
+          a.click();
+          setTimeout(()=>URL.revokeObjectURL(url), 1500);
+        }},"Exportar Projeto (JSON)")
+      ),
       el("div",{class:"h2"},"Recomendações rápidas"),
       bullets
     );

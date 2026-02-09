@@ -107,3 +107,27 @@ Enjoy.
 - Recomenda-se PC/notebook + interface de áudio
 - Resultados são **indicativos** e dependem de ruído e do microfone
 
+
+## Planejamento de PA (Fase 3)
+
+- O relatório inclui uma estimativa de PA (tops/subs/mesa/monitores)
+- Inclui RTA Snapshot (indicativo) via microfone
+- Exportação de projeto em JSON e opção de imprimir/salvar PDF (via impressão do navegador)
+
+
+## Checklist e Planejamento (Fase 4)
+
+- Nova tela **Planejamento** (/plan) com calculadora de canais, sugestão de mesa analógica/digital e checklist de compra/locação.
+- Templates prontos para igrejas (até 300 pessoas) ao criar projetos.
+- Exportação do planejamento em JSON e opção de imprimir/salvar PDF.
+
+
+## Proposta / Orçamento (Fase 5)
+
+- Nova tela **Proposta** em `/quote`
+- Gera itens automaticamente com base em:
+  - Planejamento de PA (tops/subs/mesa/monitores)
+  - Canais e checklist
+- Tabela de preços editável (salva no navegador)
+- Histórico local de propostas
+- Exportação em JSON e impressão/salvar PDF (via impressão do navegador)
