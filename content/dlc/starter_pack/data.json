@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "id": "welcome_card",
+      "title": "Boas-vindas",
+      "body": "Este conteúdo veio de uma DLC. Você pode habilitar/desabilitar no Admin."
+    },
+    {
+      "id": "tips",
+      "title": "Dica rápida",
+      "body": "No Admin, edite JSON, exporte e importe para compartilhar conteúdo."
+    }
+  ]
+}

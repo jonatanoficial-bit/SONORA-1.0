@@ -1,0 +1,28 @@
+{
+  "levels": [
+    {
+      "id": "tap_01",
+      "name": "Tap Sprint",
+      "goal": "Toque 20 vezes em 10s",
+      "type": "tap",
+      "target": 20,
+      "time": 10
+    },
+    {
+      "id": "memory_01",
+      "name": "Mini Memória",
+      "goal": "Acerte 6 pares",
+      "type": "memory",
+      "pairs": 6,
+      "time": 60
+    },
+    {
+      "id": "focus_01",
+      "name": "Foco",
+      "goal": "Toque somente nos alvos dourados",
+      "type": "focus",
+      "targets": 15,
+      "time": 25
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+import { Router } from "./router.js";
+import { loadContent } from "./contentLoader.js";
+import { initSheet } from "./ui/sheet.js";
+import { toast } from "./ui/toast.js";
+
+import { renderHome } from "./screens/home.js";
+import { renderLibrary } from "./screens/library.js";
+import { renderDlc } from "./screens/dlc.js";
+import { renderSettings } from "./screens/settings.js";
+import { renderAdmin } from "./screens/admin.js";
+import { renderMiniGame } from "./screens/play.js";
+import { renderMeasure } from "./screens/measure.js";
+
+const app = document.getElementById("app");
+const brandSub = document.getElementById("brandSub");
+
+const ctx = {
+  content: null,
+  router: null,
+  mount: (node) => {
+    app.innerHTML = "";
+    app.appendChild(node);
+    app.scrollTop = 0;
+  }
+};
+
+const routes = {
+  "/home": () => renderHome(ctx),
+  "/library": () => renderLibrary(ctx),
+  "/dlc": () => renderDlc(ctx),
+  "/settings": () => renderSettings(ctx),
+  "/admin": () => renderAdmin(ctx),
+  "/play": () => renderMiniGame(ctx),
+  "/measure": () => renderMeasure(ctx),
+};
+
+function setActiveDock(path) {
+  document.querySelectorAll(".dock-item").forEach(btn => {
+    const r = btn.getAttribute("data-route");
+    if (r === path) btn.setAttribute("aria-current", "page");
+    else btn.removeAttribute("aria-current");
+  });
+}
+
+async function boot() {
+  ctx.content = await loadContent();
+  brandSub.textContent = ctx.content.appInfo.tagline;
+
+  ctx.router = new Router({
+    onRoute: (path) => {
+      const view = routes[path] ?? routes["/home"];
+      setActiveDock(path in routes ? path : "/home");
+      ctx.mount(view());
+    }
+  });
+
+  initSheet(ctx.router, `Build: 2026-02-09 • Core v${ctx.content.coreManifest.core_version}`);
+
+  // Quick actions button
+  document.getElementById("btnQuick").addEventListener("click", () => {
+    toast("Dica: Abra DLCs → Mini Game em /play (adicione seu conteúdo depois).");
+    ctx.router.go("/play");
+  });
+
+  ctx.router.start("/home");
+
+  // Add a subtle initial toast
+  setTimeout(() => toast("Pronto. Mobile-first, DLC-ready ✅"), 350);
+}
+
+boot().catch((e) => {
+  console.error(e);
+  app.innerHTML = `<div class="card"><div class="h1">Erro ao iniciar</div><div class="p">Verifique se você está rodando via servidor (não via file://).</div><div class="tiny">${String(e)}</div></div>`;
+});

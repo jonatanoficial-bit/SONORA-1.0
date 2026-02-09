@@ -1,0 +1,14 @@
+{
+  "core_version": "1.0.0",
+  "app_info": "content/core/app-info.json",
+  "installed_dlcs": [
+    {
+      "id": "starter_pack",
+      "enabled": true
+    },
+    {
+      "id": "demo_levels",
+      "enabled": true
+    }
+  ]
+}

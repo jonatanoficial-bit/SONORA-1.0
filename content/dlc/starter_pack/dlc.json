@@ -1,0 +1,10 @@
+{
+  "id": "starter_pack",
+  "name": "Starter Pack",
+  "version": "1.0.0",
+  "description": "Conteúdo base de demonstração: itens e textos para testar o carregamento modular.",
+  "data": "content/dlc/starter_pack/data.json",
+  "assets": {
+    "icon": "content/dlc/starter_pack/icon.svg"
+  }
+}

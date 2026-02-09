@@ -1,0 +1,10 @@
+{
+  "id": "demo_levels",
+  "name": "Demo Levels",
+  "version": "1.0.0",
+  "description": "Mini 'jogo' demonstrativo: 3 níveis de desafio rápido (toque certo, tempo, combo).",
+  "data": "content/dlc/demo_levels/data.json",
+  "assets": {
+    "icon": "content/dlc/demo_levels/icon.svg"
+  }
+}
