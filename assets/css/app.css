@@ -301,3 +301,69 @@ textarea.input{min-height: 160px; resize: vertical; font-family: ui-monospace, S
     padding: 0 !important;
   }
 }
+
+/* ===============================
+   SONORA PHASE 6 — AAA VISUAL
+   =============================== */
+:root{
+  --bg-main: radial-gradient(1200px 600px at 10% -10%, #0ea5e933, transparent),
+             radial-gradient(800px 400px at 90% 10%, #22c55e22, transparent),
+             linear-gradient(180deg, #05080d, #0b1220);
+  --card-bg: rgba(18, 26, 45, 0.72);
+  --card-border: rgba(255,255,255,.08);
+  --accent: #0ea5e9;
+  --accent-2: #22c55e;
+  --txt-main: #e5e7eb;
+  --txt-soft: #9ca3af;
+}
+
+body{
+  background: var(--bg-main) !important;
+  color: var(--txt-main);
+}
+
+.card, .tile{
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.h1{
+  font-size: 1.6rem;
+  letter-spacing: .3px;
+}
+.h2{
+  font-size: 1.15rem;
+  color: #f9fafb;
+}
+
+.btn{
+  background: linear-gradient(135deg, var(--accent), #2563eb);
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(14,165,233,.35);
+}
+.btn.secondary{
+  background: linear-gradient(135deg, #374151, #111827);
+}
+
+.badge{
+  background: linear-gradient(135deg, #0ea5e955, #22c55e33);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+}
+
+.topbar{
+  backdrop-filter: blur(18px);
+  background: rgba(5,10,20,.65);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.dock{
+  backdrop-filter: blur(20px);
+  background: rgba(5,10,20,.7);
+  border-top: 1px solid var(--card-border);
+}
