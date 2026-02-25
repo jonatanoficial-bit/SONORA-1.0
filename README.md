@@ -1,6 +1,6 @@
 # SONORA
 
-**Build:** 2026-02-25 10:33 BRT
+**Build:** 2026-02-25 10:56 BRT
 
 This is a **mobile-first**, **vanilla HTML/CSS/JS** project scaffold with:
 - Premium AAA-style UI (glass/gradient, micro-interactions, smooth animations)
@@ -152,4 +152,11 @@ Enjoy.
 
 - Nova tela **Simulador** (/sim) com mapa interativo, heatmap de cobertura (indicativo) e score.
 - Arraste caixas e subs, ajuste toe-in/directivity/target e salve no projeto.
+
+
+## Medição Avançada (Fase 11)
+
+- RT estimado por bandas (125Hz–4kHz).
+- Confidence Score da medição.
+- Base pronta para IR real futura.
 
