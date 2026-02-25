@@ -106,6 +106,18 @@ export function renderMeasure(ctx){
     );
     const people=el("input",{class:"input",type:"number",min:"10",step:"1",placeholder:"Capacidade (pessoas)",value:existing?.people||"200"});
     const notes=el("input",{class:"input",placeholder:"Observações (opcional)",value:existing?.notes||""});
+
+    // Templates (Phase 4+): optional presets
+    const tplWrap = el("div",{class:"tile"},
+      el("div",{class:"badge"},"Template (opcional)")
+    );
+    const tplSelect = el("select",{class:"input"}, el("option",{value:""},"Selecione um template…"));
+    tplWrap.appendChild(tplSelect);
+    loadTemplates().then(list=>{
+      list.forEach(t=>{
+        tplSelect.appendChild(el("option",{value:t.id, selected:(existing?.templateId===t.id)}, t.name));
+      });
+    });
     const saveBtn=el("button",{class:"btn",onclick:async()=>{
       const a=parseFloat(area.value||"0"), h=parseFloat(height.value||"0");
       const vol=(a>0&&h>0)?a*h:0;
