@@ -1,6 +1,6 @@
 # SONORA
 
-**Build:** 2026-02-25 10:23 BRT
+**Build:** 2026-02-25 10:33 BRT
 
 This is a **mobile-first**, **vanilla HTML/CSS/JS** project scaffold with:
 - Premium AAA-style UI (glass/gradient, micro-interactions, smooth animations)
@@ -146,4 +146,10 @@ Enjoy.
 - Tokens de espaçamento, raio, elevação e motion (microinterações)
 - Componentes: chips, KPIs, tabelas aprimoradas, skeleton loader, modal
 - Melhorias de foco/acessibilidade e impressão
+
+
+## Simulador (Fase 10)
+
+- Nova tela **Simulador** (/sim) com mapa interativo, heatmap de cobertura (indicativo) e score.
+- Arraste caixas e subs, ajuste toe-in/directivity/target e salve no projeto.
 
