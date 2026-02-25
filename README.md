@@ -1,6 +1,6 @@
 # SONORA
 
-**Build:** 2026-02-25 12:47 BRT
+**Build:** 2026-02-25 18:14 BRT
 
 This is a **mobile-first**, **vanilla HTML/CSS/JS** project scaffold with:
 - Premium AAA-style UI (glass/gradient, micro-interactions, smooth animations)
@@ -166,4 +166,11 @@ Enjoy.
 - Manifest + Service Worker para instalação (PWA).
 - Ícone e logo oficiais incluídos.
 - Toggle **Modo Pro** em Ajustes (localStorage).
+
+
+## IR e RT por bandas (Fase 13)
+
+- Nova tela **IR** (/ir) para capturar impulso (palma) e estimar RT por bandas com DSP real.
+- Salva `project.ir`, `project.rtBands` e `project.irConfidence`.
+- Relatório exibe RT por bandas quando disponível.
 

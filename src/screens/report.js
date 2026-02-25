@@ -252,3 +252,36 @@ function table(rows){
 function pageBreak(){
   return el("div",{class:"report-pagebreak"});
 }
+
+
+function rtBandsCard(project){
+  const bands = project?.rtBands || project?.ir?.bands || null;
+  if(!bands || !bands.length) return null;
+  const conf = project.irConfidence || null;
+
+  const card = el("div",{class:"card"},
+    el("div",{class:"h2"},"RT por bandas (IR)"),
+    el("div",{class:"tiny"},"Estimativa por impulso (palma/estouro). Indicativo para planejamento.")
+  );
+
+  if(conf){
+    card.appendChild(el("div",{class:"kpi-grid"},
+      el("div",{class:"kpi"}, el("div",{class:"k"},"Confiança IR"), el("div",{class:"v"}, conf.overall+"%"), el("div",{class:"t"}, conf.level))
+    ));
+  }
+
+  const table = document.createElement("table");
+  table.className="table";
+  const head=document.createElement("tr");
+  head.innerHTML="<th>Freq</th><th>RT (s)</th><th>Qualidade</th>";
+  table.appendChild(head);
+  bands.forEach(b=>{
+    const rt = (typeof b.rt==="number") ? b.rt.toFixed(2) : "—";
+    const q = (b.r2==null) ? "—" : (b.r2>0.85?"Alta":b.r2>0.65?"Média":"Baixa");
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${b.hz} Hz</td><td>${rt}</td><td>${q}</td>`;
+    table.appendChild(tr);
+  });
+  card.appendChild(table);
+  return card;
+}
