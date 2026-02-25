@@ -315,6 +315,9 @@ export function renderMeasure(ctx){
             const res = await runRTASnapshot({ seconds: 2.2, onProgress: (v)=>{ btn.textContent = `Capturando… ${Math.round(v*100)}%`; } });
             state.bands = res.bands;
             state.eq = suggestEQ(res.bands);
+            // Persist RTA snapshot into project for unified reports
+            p.rta = { bands: res.bands, eq: state.eq, capturedAt: Date.now() };
+            try { upsertProject(p); } catch {}
             toast("RTA capturado");
             renderRta();
           }catch(e){

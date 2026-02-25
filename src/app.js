@@ -8,6 +8,7 @@ import { renderLibrary } from "./screens/library.js";
 import { renderDlc } from "./screens/dlc.js";
 import { renderSettings } from "./screens/settings.js";
 import { renderQuote } from "./screens/quote.js";
+import { renderReport } from "./screens/report.js";
 import { renderAdmin } from "./screens/admin.js";
 import { renderPlan } from "./screens/plan.js";
 import { renderMiniGame } from "./screens/play.js";
@@ -36,6 +37,7 @@ const routes = {
   "/measure": () => renderMeasure(ctx),
   "/plan": () => renderPlan(ctx),
   "/quote": () => renderQuote(ctx),
+  "/report": () => renderReport(ctx),
 };
 
 function setActiveDock(path) {
@@ -48,9 +50,10 @@ function setActiveDock(path) {
 
 async function boot() {
   ctx.content = await loadContent();
-  brandSub.textContent = ctx.content.appInfo.tagline;
+  brandSub.textContent = `${ctx.content.appInfo.tagline} • Build ${ctx.content.appInfo.buildStamp || ctx.content.appInfo.build}`;
 
   ctx.router = new Router({
+    knownRoutes: Object.keys(routes),
     onRoute: (path) => {
       const view = routes[path] ?? routes["/home"];
       setActiveDock(path in routes ? path : "/home");

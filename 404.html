@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SONORA</title>
+  <meta name="robots" content="noindex" />
+</head>
+<body>
+<script>
+(function(){
+  // GitHub Pages SPA fallback:
+  // When a deep link (ex: /repo/report) is refreshed, GH Pages serves 404.html with the same URL.
+  // We redirect back to index with ?r=<route>, and the Router will restore the route.
+  var routes = ["/home", "/library", "/dlc", "/settings", "/admin", "/play", "/measure", "/plan", "/quote", "/report"];
+  var path = location.pathname || "/";
+  path = path.replace(/\/index\.html$/, "");
+  var base = path.replace(/\/$/, "");
+  for (var i=0;i<routes.length;i++) {
+    var r = routes[i];
+    if (r && r !== "/" && base.endsWith(r)) {
+      base = base.slice(0, -r.length);
+      break;
+    }
+  }
+  base = base.replace(/\/$/, "");
+  var route = path;
+  if (base && route.indexOf(base) === 0) route = route.slice(base.length);
+  if (!route) route = "/home";
+  if (route === "/") route = "/home";
+  var target = (base ? base : "") + "/?r=" + encodeURIComponent(route);
+  location.replace(target);
+})();
+</script>
+</body>
+</html>

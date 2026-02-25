@@ -9,6 +9,15 @@ export function renderHome(ctx) {
     el("div", { class: "sep" }),
     el("div", { class: "tiny" }, "Propósito do app/jogo:"),
     el("div", { class: "p" }, appInfo.purpose_placeholder),
+    
+    el("div", { class: "sep" }),
+    el("div", { class: "h2" }, "Ações rápidas"),
+    el("div", { class: "row" },
+      el("button", { class: "btn small", "data-route": "/measure" }, "Nova medição"),
+      el("button", { class: "btn small secondary", "data-route": "/plan" }, "Planejamento"),
+      el("button", { class: "btn small secondary", "data-route": "/report" }, "Relatório Premium"),
+      el("button", { class: "btn small ghost", "data-route": "/quote" }, "Proposta")
+    ),
     el("div", { class: "sep" }),
     el("div", { class: "h2" }, "DLCs Ativas"),
     el("div", { class: "p" }, dlcList.length ? `${dlcList.length} pacote(s) carregado(s) dinamicamente.` : "Nenhuma DLC ativa."),

@@ -12,7 +12,7 @@ export function renderSettings(ctx) {
     ),
     el("div", { class: "card" },
       el("div", { class: "h2" }, "Info"),
-      el("div", { class: "tiny" }, `Core v${coreManifest.core_version} • Build ${appInfo.build}`),
+      el("div", { class: "tiny" }, `Core v${coreManifest.core_version} • Build ${appInfo.buildStamp || (appInfo.build + " " + (appInfo.buildTime||""))}`),
       el("div", { class: "sep" }),
       el("button", { class: "btn secondary", onclick: () => { clearOverrides(); toast("Dados locais limpos"); setTimeout(()=>location.reload(), 400); } },
         "Limpar overrides (LocalStorage)"

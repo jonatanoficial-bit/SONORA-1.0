@@ -1,6 +1,6 @@
 # SONORA
 
-**Build:** 2026-02-09
+**Build:** 2026-02-25 10:23 BRT
 
 This is a **mobile-first**, **vanilla HTML/CSS/JS** project scaffold with:
 - Premium AAA-style UI (glass/gradient, micro-interactions, smooth animations)
@@ -36,6 +36,8 @@ Use the extension **Live Server**.
 3. Source: `Deploy from a branch`
 4. Branch: `main` and folder: `/ (root)`
 5. Save. Your site will be available at the Pages URL.
+
+✅ **SPA refresh fix:** this project includes a `404.html` fallback so deep links (ex: `/report`) work on GitHub Pages.
 
 ---
 
@@ -131,3 +133,17 @@ Enjoy.
 - Tabela de preços editável (salva no navegador)
 - Histórico local de propostas
 - Exportação em JSON e impressão/salvar PDF (via impressão do navegador)
+
+## Relatório Premium (Fase 7)
+
+- Nova tela **Relatório Premium** (`/report`) com layout cliente-ready.
+- Exportação por impressão do navegador (PDF) + export JSON.
+- O RTA (snapshot) passa a ser salvo no projeto quando capturado em **Medição**, para entrar no relatório.
+
+
+## Design System AAA (Fase 9)
+
+- Tokens de espaçamento, raio, elevação e motion (microinterações)
+- Componentes: chips, KPIs, tabelas aprimoradas, skeleton loader, modal
+- Melhorias de foco/acessibilidade e impressão
+
