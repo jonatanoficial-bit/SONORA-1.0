@@ -1,6 +1,6 @@
 # SONORA
 
-**Build:** 2026-02-25 18:14 BRT
+**Build:** 2026-02-25 19:29 BRT
 
 This is a **mobile-first**, **vanilla HTML/CSS/JS** project scaffold with:
 - Premium AAA-style UI (glass/gradient, micro-interactions, smooth animations)
@@ -173,4 +173,17 @@ Enjoy.
 - Nova tela **IR** (/ir) para capturar impulso (palma) e estimar RT por bandas com DSP real.
 - Salva `project.ir`, `project.rtBands` e `project.irConfidence`.
 - Relatório exibe RT por bandas quando disponível.
+
+
+## Identidade Visual (Fase 14)
+
+- Fundo cinematográfico (aurora animada + grain).
+- Botões/inputs/dock/topbar refinados.
+- Tipografia e hierarquia ajustadas.
+
+
+## Fundo cinematográfico (Fase 15)
+
+- Fundo com imagem temática (som/medição) + overlays para legibilidade.
+- Wordmark SONORA no topo.
 
