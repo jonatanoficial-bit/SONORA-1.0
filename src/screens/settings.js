@@ -1,4 +1,5 @@
 import { el } from "../ui/dom.js";
+import { promptInstall } from "../pwa.js";
 import { clearOverrides } from "../storage.js";
 import { toast } from "../ui/toast.js";
 

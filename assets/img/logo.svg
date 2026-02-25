@@ -1,19 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="920" height="260" viewBox="0 0 920 260" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SONORA logo">
   <defs>
-    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#0ea5e9"/>
-      <stop offset="1" stop-color="#22c55e"/>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0EA5E9"/>
+      <stop offset="0.52" stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#22C55E"/>
     </linearGradient>
-    <filter id="s" x="-20%" y="-50%" width="140%" height="200%">
-      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity="0.45"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1630"/>
+      <stop offset="1" stop-color="#2B1559"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 .35 0" result="s"/>
+      <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-  <g filter="url(#s)">
-    <path d="M72 100c30 0 54-24 54-54S102-8 72 2 18 34 18 58s24 42 54 42Z" fill="url(#g)" opacity="0.92"/>
-    <path d="M53 59c14-22 34-34 61-36" fill="none" stroke="#e5e7eb" stroke-opacity="0.9" stroke-width="8" stroke-linecap="round"/>
-    <path d="M40 78c18-14 41-20 69-18" fill="none" stroke="#e5e7eb" stroke-opacity="0.65" stroke-width="6" stroke-linecap="round"/>
-    <path d="M32 96c22-8 44-10 67-6" fill="none" stroke="#e5e7eb" stroke-opacity="0.45" stroke-width="5" stroke-linecap="round"/>
+
+  <g transform="translate(20,20)" filter="url(#soft)">
+    <rect x="0" y="0" width="220" height="220" rx="52" fill="url(#bg)" stroke="rgba(255,255,255,.14)"/>
+    <path d="M42 130H78" stroke="url(#g1)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M142 130H178" stroke="url(#g1)" stroke-width="10" stroke-linecap="round"/>
+    <g stroke="url(#g1)" stroke-width="16" stroke-linecap="round">
+      <path d="M84 154V106"/>
+      <path d="M104 174V86"/>
+      <path d="M124 190V70"/>
+      <path d="M144 174V86"/>
+      <path d="M164 154V106"/>
+    </g>
   </g>
-  <text x="150" y="92" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto" font-size="64" font-weight="800" fill="#f9fafb" letter-spacing="2">SONORA</text>
-  <text x="152" y="118" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto" font-size="18" font-weight="600" fill="#9ca3af" letter-spacing="1">Acoustic • Planning • Reports</text>
+
+  <g transform="translate(280,62)">
+    <text x="0" y="118" fill="#FFFFFF" font-size="132" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-weight="900" letter-spacing="1.5">SONORA</text>
+  </g>
 </svg>

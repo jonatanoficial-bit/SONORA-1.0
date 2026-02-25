@@ -1,6 +1,6 @@
 # SONORA
 
-**Build:** 2026-02-25 10:56 BRT
+**Build:** 2026-02-25 12:47 BRT
 
 This is a **mobile-first**, **vanilla HTML/CSS/JS** project scaffold with:
 - Premium AAA-style UI (glass/gradient, micro-interactions, smooth animations)
@@ -159,4 +159,11 @@ Enjoy.
 - RT estimado por bandas (125Hz–4kHz).
 - Confidence Score da medição.
 - Base pronta para IR real futura.
+
+
+## PWA e Modo Pro (Fase 12)
+
+- Manifest + Service Worker para instalação (PWA).
+- Ícone e logo oficiais incluídos.
+- Toggle **Modo Pro** em Ajustes (localStorage).
 
